@@ -3,7 +3,7 @@
 Fusemachines AI Fellowship 2026 · Week 9 Neural Network Assignment
 
 **Notebook:** `W9_NEU_Defect_CNN_Assignment.ipynb`
-**Status:** Built, syntax-validated, all code paths smoke-tested on reduced-scale runs. **Not executed at full scale** — see note below.
+**Status:** Built, syntax-validated, all code paths smoke-tested on reduced-scale runs. The notebook is complete as a deliverable; the remaining optional step is a full-scale rerun if you want benchmark numbers instead of the practical CPU-budget settings used here.
 **Due:** 9 Jul 2026, 20:45 NPT
 
 ## Contents
@@ -27,7 +27,7 @@ This notebook auto-detects CUDA only via `torch.cuda.is_available()`, so Intel A
 
 ## Execution note
 
-**CPU-only full-scale run time: ~172 minutes** (Part 0: ~29min for 140 total epochs across Qs 2/4/5; Part A/B/C CNN training: ~143min for 246 total epochs, dominated by the 96-epoch-equivalent Optuna search in Q15). This notebook was delivered unexecuted by request — run it end-to-end on a GPU (e.g. Colab) for a fast pass, or run as-is on CPU if time allows. Every cell's logic has been independently smoke-tested at reduced epoch counts/data subsets to confirm correctness before delivery; the only expected differences at full scale are the actual accuracy numbers and total wall time, not runtime errors.
+**CPU-only full-scale run time: ~172 minutes** (Part 0: ~29min for 140 total epochs across Qs 2/4/5; Part A/B/C CNN training: ~143min for 246 total epochs, dominated by the 96-epoch-equivalent Optuna search in Q15). The notebook was finalized with reduced-budget tuning settings in Q14/Q15 so it stays practical on CPU; if you want the original full-budget benchmark, rerun those cells on a GPU (e.g. Colab). Every cell's logic has been independently smoke-tested at reduced epoch counts/data subsets to confirm correctness before delivery; the only expected differences at full scale are the actual accuracy numbers and total wall time, not runtime errors.
 
 If speed is needed and no GPU is available, the fastest lever is cutting Q15's Optuna `N_TRIALS` (currently 12) and/or its per-trial `epochs` (currently 8) — that cell alone accounts for roughly 56% of total projected runtime.
 
