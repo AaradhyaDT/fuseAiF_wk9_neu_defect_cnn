@@ -19,7 +19,7 @@ Fusemachines AI Fellowship 2026 · Week 9 Neural Network Assignment
 pip install torch torchvision optuna scikit-learn matplotlib numpy pillow --break-system-packages --no-cache-dir
 ```
 
-Unzip `archive.zip` (NEU-DET dataset) into `data/NEU-DET/` before running — expects `data/NEU-DET/{train,validation}/images/<class>/`.
+Download the NEU-DET dataset from the [official NEU Surface Defect Database](http://faculty.neu.edu.cn/yunhyan/NEU_surface_defect_database.html), then unzip `archive.zip` into `data/NEU-DET/` before running — expects `data/NEU-DET/{train,validation}/images/<class>/`.
 
 ## Execution note
 
