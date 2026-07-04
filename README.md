@@ -15,11 +15,15 @@ Fusemachines AI Fellowship 2026 · Week 9 Neural Network Assignment
 
 ## Setup
 
+Python 3.12.10 is the current local environment version used for this WK9 setup.
+
 ```bash
 pip install torch torchvision optuna scikit-learn matplotlib numpy pillow --break-system-packages --no-cache-dir
 ```
 
 Download the NEU-DET dataset from [Kaggle: NEU Surface Defect Database](https://www.kaggle.com/datasets/kaustubhdikshit/neu-surface-defect-database?authuser=0), then unzip `archive.zip` into `data/NEU-DET/` before running — expects `data/NEU-DET/{train,validation}/images/<class>/`.
+
+This notebook auto-detects CUDA only via `torch.cuda.is_available()`, so Intel Arc will not be used automatically by this setup. If you want GPU acceleration on Intel Arc, you will need a compatible accelerator backend; otherwise, run on CPU and no code changes are required.
 
 ## Execution note
 

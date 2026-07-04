@@ -4,7 +4,7 @@ Target: run `W9_NEU_Defect_CNN_Assignment.ipynb` locally.
 
 ## 1. Python
 
-Python 3.12.x (tested on 3.12.3). Verify: `python3 --version`
+Python 3.12.10. Verify: `python --version`
 
 ## 2. Virtual environment
 
@@ -35,7 +35,7 @@ pillow==12.1.1
 
 ## 4. GPU (optional, strongly recommended)
 
-If you have an NVIDIA GPU, install the CUDA-matched wheel from <https://pytorch.org/get-started/locally/> instead of the default `pip install torch`. The notebook auto-detects via `torch.cuda.is_available()` — no code changes needed either way.
+This notebook currently auto-detects CUDA only via `torch.cuda.is_available()`, so Intel Arc will not be used automatically by this setup. If you want GPU acceleration on Intel Arc, you will need a compatible PyTorch accelerator backend; otherwise, run on CPU and no code changes are required.
 
 Full CPU run ≈ 172 min. GPU cuts this to low single-digit minutes.
 
@@ -48,6 +48,8 @@ python -m ipykernel install --user --name=neu-defect-cnn
 Then in VS Code: open the `.ipynb` → top-right kernel picker → select `neu-defect-cnn`.
 
 ## 6. Dataset
+
+Download the NEU-DET dataset from [Kaggle: NEU Surface Defect Database](https://www.kaggle.com/datasets/kaustubhdikshit/neu-surface-defect-database?authuser=0).
 
 Extract `archive.zip` so the structure is:
 
