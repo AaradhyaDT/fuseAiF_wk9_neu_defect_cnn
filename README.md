@@ -2,9 +2,20 @@
 
 Fusemachines AI Fellowship 2026 · Week 9 Neural Network Assignment
 
+This repository contains the Week 9 deliverable for the Fusemachines AI Fellowship 2026. The work focuses on building and hardening a PyTorch CNN for NEU surface-defect classification, following the assignment’s Part 0/A/B/C structure and the fellowship’s Week 9 submission workflow.
+
 **Notebook:** `W9_NEU_Defect_CNN_Assignment.ipynb`
-**Status:** Built, syntax-validated, all code paths smoke-tested on reduced-scale runs. The notebook is complete as a deliverable; the remaining optional step is a full-scale rerun if you want benchmark numbers instead of the practical CPU-budget settings used here.
+**Status:** Built, syntax-validated, and executed on a T4 GPU runtime in Google Colab. The notebook is complete as a deliverable; the remaining optional step is a local rerun if you want to reproduce the same workflow outside Colab.
 **Due:** 9 Jul 2026, 20:45 NPT
+
+## Project context
+
+- **Fellowship context:** Week 9 of a 24-week Fusemachines AI Fellowship program.
+- **Task focus:** classify steel surface defects from the NEU-DET dataset into 6 classes: `crazing`, `inclusion`, `patches`, `pitted_surface`, `rolled-in_scale`, and `scratches`.
+- **Stack:** PyTorch, torchvision, scikit-learn, Optuna, Matplotlib, NumPy, and Pillow.
+- **Notebook coverage:** Part 0 foundations, Part A CNN training, Part B hardening, and Part C tuning.
+- **Key artifacts:** saved model checkpoint in `assignment/best_model.pt`, generated plots in `plots/`, and supporting notes in `docs/`.
+- **Runtime support:** the notebook includes a Colab/Kaggle-friendly dataset download path and CUDA auto-detection, so it can run in a GPU-backed notebook environment without manual path rewrites.
 
 ## Contents
 
@@ -23,13 +34,15 @@ pip install torch torchvision optuna scikit-learn matplotlib numpy pillow --brea
 
 Download the NEU-DET dataset from [Kaggle: NEU Surface Defect Database](https://www.kaggle.com/datasets/kaustubhdikshit/neu-surface-defect-database?authuser=0), then unzip `archive.zip` into `data/NEU-DET/` before running — expected layout is `data/NEU-DET/{train,validation}/images/<class>/`.
 
-This notebook auto-detects CUDA only via `torch.cuda.is_available()`, so Intel Arc will not be used automatically by this setup. If you want GPU acceleration on Intel Arc, you will need a compatible accelerator backend; otherwise, run on CPU and no code changes are required.
+This notebook auto-detects CUDA via `torch.cuda.is_available()`, so it will use GPU when available. The reference execution was done on a Colab T4 GPU runtime, and the notebook is written to work without code changes on either GPU or CPU environments.
 
 ## Execution note
 
-**CPU-only full-scale run time: ~105 minutes (estimated)** (Part 0: ~29min for 140 total epochs across Qs 2/4/5 — measured; Part A/B/C CNN training: ~76min estimated for 131 total epochs). Breakdown of the 131: Q12's 2×2 grid search (60 epochs, ~46% — now the single largest contributor), Part B's two hardening reruns (30 epochs), Part A's baseline (15 epochs), Q14's StepLR comparison (10 epochs), and Q15's Optuna search (16 epoch-equivalents: 4 trials × 4 epochs each — the smallest contributor). The ~76min figure is a proportional estimate scaled from this notebook's own per-CNN-epoch rate, not a fresh measurement — replace it with your actual local run time. The notebook was finalized with reduced-budget tuning settings in Q14/Q15 so it stays practical on CPU; if you want the original full-budget benchmark, rerun those cells on a GPU (e.g. Colab). Every cell's logic has been independently smoke-tested at reduced epoch counts/data subsets to confirm correctness before delivery; the only expected differences at full scale are the actual accuracy numbers and total wall time, not runtime errors.
+**Reference runtime:** executed on a Google Colab T4 GPU runtime. The notebook was finalized with reduced-budget tuning settings in Q14/Q15 so it remains practical on GPU-backed Colab runs while still producing the full assignment workflow. If you want the original full-budget benchmark, rerun those cells on a stronger or longer-running GPU environment.
 
-If speed is needed and no GPU is available, the fastest lever is now Q12's grid search — reduce `EPOCHS_C` (currently 15) for the 2×2 sweep, or shrink the grid itself — since it's the single largest contributor at ~46% of the Part A/B/C epoch budget. Q15's Optuna search (`N_TRIALS=4`, `epochs=4` per trial) is already at a minimal, CPU-practical budget and is no longer a meaningful lever.
+For local runs, the main speed lever remains Q12's grid search — reduce `EPOCHS_C` (currently 15) for the 2×2 sweep, or shrink the grid itself — since it is the single largest contributor to the Part A/B/C training budget. Q15's Optuna search (`N_TRIALS=4`, `epochs=4` per trial) is already at a minimal budget and is no longer a major runtime lever.
+
+The notebook also includes the Kaggle/Colab download workflow that was verified during the fellowship session: it installs `kaggle`, uploads `kaggle.json`, downloads and unzips the NEU-DET archive, and places the extracted images into the expected dataset folders under `data/NEU-DET/`.
 
 For quick orientation, start with the notebook, then use the task plan and status notes in [docs/W9_TaskPlan.md](docs/W9_TaskPlan.md) and [docs/Final_task.md](docs/Final_task.md) for context.
 
