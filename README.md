@@ -11,7 +11,7 @@ Fusemachines AI Fellowship 2026 · Week 9 Neural Network Assignment
 - **Part 0** (Qs 1–5): NN foundations on flattened NEU images — 2-layer `nn.Module`, ReLU vs Sigmoid, CE vs MSE justification, SGD/Momentum/Adam + GPU memory estimate, BatchNorm1d vs Dropout ablation.
 - **Part A** (Qs 1–6): CNN defect classifier — `ImageFolder` pipeline, dataset-computed normalization, Conv→ReLU→MaxPool ×2 architecture, 15-epoch training loop, curve analysis, per-class F1 + misclassified crazing/patches inspection.
 - **Part B** (Qs 7–11): Hardening — train-only augmentation, BatchNorm2d, Dropout(0.4), cumulative comparison plot, written reflection.
-- **Part C** (Qs 12–15): Tuning — 2×2 grid search, results table, StepLR scheduler, Optuna Bayesian search (12 trials).
+- **Part C** (Qs 12–15): Tuning — 2×2 grid search, results table, StepLR scheduler, Optuna Bayesian search (4 trials).
 
 ## Setup
 
@@ -27,9 +27,9 @@ This notebook auto-detects CUDA only via `torch.cuda.is_available()`, so Intel A
 
 ## Execution note
 
-**CPU-only full-scale run time: ~172 minutes** (Part 0: ~29min for 140 total epochs across Qs 2/4/5; Part A/B/C CNN training: ~143min for 246 total epochs, dominated by the 96-epoch-equivalent Optuna search in Q15). The notebook was finalized with reduced-budget tuning settings in Q14/Q15 so it stays practical on CPU; if you want the original full-budget benchmark, rerun those cells on a GPU (e.g. Colab). Every cell's logic has been independently smoke-tested at reduced epoch counts/data subsets to confirm correctness before delivery; the only expected differences at full scale are the actual accuracy numbers and total wall time, not runtime errors.
+**CPU-only full-scale run time: ~105 minutes (estimated)** (Part 0: ~29min for 140 total epochs across Qs 2/4/5 — measured; Part A/B/C CNN training: ~76min estimated for 131 total epochs). Breakdown of the 131: Q12's 2×2 grid search (60 epochs, ~46% — now the single largest contributor), Part B's two hardening reruns (30 epochs), Part A's baseline (15 epochs), Q14's StepLR comparison (10 epochs), and Q15's Optuna search (16 epoch-equivalents: 4 trials × 4 epochs each — the smallest contributor). The ~76min figure is a proportional estimate scaled from this notebook's own per-CNN-epoch rate, not a fresh measurement — replace it with your actual local run time. The notebook was finalized with reduced-budget tuning settings in Q14/Q15 so it stays practical on CPU; if you want the original full-budget benchmark, rerun those cells on a GPU (e.g. Colab). Every cell's logic has been independently smoke-tested at reduced epoch counts/data subsets to confirm correctness before delivery; the only expected differences at full scale are the actual accuracy numbers and total wall time, not runtime errors.
 
-If speed is needed and no GPU is available, the fastest lever is cutting Q15's Optuna `N_TRIALS` (currently 12) and/or its per-trial `epochs` (currently 8) — that cell alone accounts for roughly 56% of total projected runtime.
+If speed is needed and no GPU is available, the fastest lever is now Q12's grid search — reduce `EPOCHS_C` (currently 15) for the 2×2 sweep, or shrink the grid itself — since it's the single largest contributor at ~46% of the Part A/B/C epoch budget. Q15's Optuna search (`N_TRIALS=4`, `epochs=4` per trial) is already at a minimal, CPU-practical budget and is no longer a meaningful lever.
 
 ## Repo structure
 
