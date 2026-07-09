@@ -44,7 +44,7 @@ fuseAiF_wk9_neu_defect_cnn/
 ├── docs/                                  # task plan, final notes, and reference materials
 │   ├── W9_TaskPlan.md
 │   ├── Final_task.md
-│   └── resources/                        # class materials and reference PDFs
+│   └── resources/                         # class materials and reference PDFs
 ├── misc/                                  # scratch, not graded
 ├── README.md
 ├── LICENSE
